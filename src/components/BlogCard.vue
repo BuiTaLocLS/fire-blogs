@@ -1,6 +1,6 @@
 <template>
   <div class="blog-card">
-    <div class="icons">
+    <div v-show="editPost" class="icons">
       <div class="icon">
         <box-icon color="#2a2a2a" class="edit" name="edit"></box-icon>
       </div>
@@ -29,6 +29,11 @@
 export default {
   name: "blogCard",
   props: ["post"],
+  computed: {
+    editPost() {
+      return this.$store.state.editPost;
+    },
+  },
 };
 </script>
 
