@@ -1,9 +1,9 @@
 <template>
   <div class="app-wrapper">
     <div class="app">
-      <navigation />
+      <navigation v-if="!navigation" />
       <router-view />
-      <Footer />
+      <Footer v-if="!navigation" />
     </div>
   </div>
 </template>
@@ -15,12 +15,32 @@ export default {
   name: "app",
   components: { Navigation, Footer },
   data() {
-    return {};
+    return {
+      navigation: null,
+    };
   },
-  created() {},
+  created() {
+    this.checkRoute();
+  },
   mounted() {},
-  methods: {},
-  watch: {},
+  methods: {
+    checkRoute() {
+      if (
+        this.$route.name === "Login" ||
+        this.$route.name === "Register" ||
+        this.$route.name === "ForgotPassword"
+      ) {
+        this.navigation = true;
+        return;
+      }
+      this.navigation = false;
+    },
+  },
+  watch: {
+    $route() {
+      this.checkRoute();
+    },
+  },
 };
 </script>
 
@@ -141,5 +161,10 @@ button,
       grid-template-columns: repeat(4, 1fr);
     }
   }
+}
+.error {
+  text-align: center;
+  font-size: 12px;
+  color: red;
 }
 </style>
