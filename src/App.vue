@@ -11,6 +11,8 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import Footer from "./components/Footer.vue";
+import firebase from "firebase/app";
+import "firebase/auth";
 export default {
   name: "app",
   components: { Navigation, Footer },
@@ -20,6 +22,14 @@ export default {
     };
   },
   created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.$store.commit("updateUser", user);
+      console.log("user" + user);
+      if (user) {
+        this.$store.dispatch("getCurrentUser");
+        console.log(this.$store.state.profileEmail);
+      }
+    });
     this.checkRoute();
   },
   mounted() {},

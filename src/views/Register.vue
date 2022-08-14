@@ -93,10 +93,10 @@ export default {
   methods: {
     async register() {
       if (
-        this.email !== "" ||
-        this.password !== "" ||
-        this.firstName !== "" ||
-        this.lastName !== "" ||
+        this.email !== "" &&
+        this.password !== "" &&
+        this.firstName !== "" &&
+        this.lastName !== "" &&
         this.username !== ""
       ) {
         this.error = false;
@@ -108,12 +108,14 @@ export default {
         );
         const result = await createUser;
         const dataBase = db.collection("users").doc(result.user.uid);
+
         await dataBase.set({
           firstName: this.firstName,
           lastName: this.lastName,
-          username: this.username,
+          username: this.userName,
           email: this.email,
         });
+
         this.$router.push({ name: "Home" });
         return;
       }

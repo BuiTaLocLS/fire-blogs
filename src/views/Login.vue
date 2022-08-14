@@ -32,10 +32,15 @@
           <box-icon class="icon" name="lock-alt"></box-icon>
         </div>
       </div>
-      <router-link class="forgot-password" :to="{ name: 'ForgotPassword' }"
+      <div v-show="error" class="error">
+        {{ this.errorMsg }}
+      </div>
+      <router-link
+        class="forgot-password router-link"
+        :to="{ name: 'ForgotPassword' }"
         >Forgot Password</router-link
       >
-      <button>Sign in</button>
+      <button @click.prevent="signIn">Sign in</button>
       <div class="angle"></div>
     </form>
     <div class="background"></div>
@@ -43,6 +48,8 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
 export default {
   name: "Login",
   components: {},
@@ -50,14 +57,34 @@ export default {
     return {
       email: null,
       password: null,
+      error: null,
+      errorMsg: "",
     };
+  },
+  methods: {
+    signIn() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          this.$router.push({ name: "Home" });
+          this.error = false;
+          this.errorMsg = "";
+          console.log(firebase.auth().currentUser.uid);
+        })
+        .catch((err) => {
+          this.error = true;
+          this.errorMsg = err.message;
+          console.log(this.errorMsg);
+        });
+    },
   },
 };
 </script>
 
 <style lang="scss">
 .router-link {
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 .form-wrap {
   overflow: hidden;

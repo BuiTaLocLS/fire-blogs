@@ -78,6 +78,15 @@
 <script>
 export default {
   name: "footer-vue",
+  data() {
+    return {
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
 };
 </script>
 
