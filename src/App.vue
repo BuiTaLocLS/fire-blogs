@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
-    <div class="app">
-      <navigation v-if="!navigation" />
+    <div class="app" v-if="this.$store.state.postLoaded">
+      <Navigation v-if="!navigation" />
       <router-view />
       <Footer v-if="!navigation" />
     </div>
@@ -24,13 +24,14 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       this.$store.commit("updateUser", user);
-      console.log("user" + user);
+      console.log("userr" + user);
       if (user) {
         this.$store.dispatch("getCurrentUser");
         console.log(this.$store.state.profileEmail);
       }
     });
     this.checkRoute();
+    this.$store.dispatch("getPost");
   },
   mounted() {},
   methods: {
@@ -163,7 +164,7 @@ button,
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (min-width: 900[x]) {
+    @media (min-width: 900px) {
       grid-template-columns: repeat(3, 1fr);
     }
 

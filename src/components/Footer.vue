@@ -55,14 +55,14 @@
         </div>
         <div class="col-2">
           <ul>
-            <router-link class="link" :to="{ name: 'home' }">Home</router-link>
-            <router-link class="link" :to="{ name: 'blogs' }"
+            <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
+            <router-link class="link" :to="{ name: 'Blogs' }"
               >Blogs</router-link
             >
-            <router-link v-if="user" class="link" :to="{ name: 'newpost' }"
-              >Blogs</router-link
+            <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }"
+              >Create Blogs</router-link
             >
-            <router-link v-if="!user" class="link" :to="{ name: 'login' }"
+            <router-link v-if="!user" class="link" :to="{ name: 'Login' }"
               >Login In / Register
             </router-link>
           </ul>
@@ -79,12 +79,14 @@
 export default {
   name: "footer-vue",
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     user() {
       return this.$store.state.user;
+    },
+    admin() {
+      return this.$store.state.profileAdmin;
     },
   },
 };

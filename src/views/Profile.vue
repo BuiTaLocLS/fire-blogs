@@ -57,6 +57,9 @@ export default {
       this.modalActive = !this.modalActive;
     },
   },
+  beforeDestroy() {
+    this.$store.dispatch("getCurrentUser");
+  },
   computed: {
     firstName: {
       get() {
